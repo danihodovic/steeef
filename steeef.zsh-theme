@@ -81,5 +81,5 @@ add-zsh-hook precmd steeef_precmd
 pr_24h_clock='%*'
 
 PROMPT=$'
-%{$purple%}%n${PR_RST}@%{$orange%}%m${PR_RST} %{$limegreen%}%~${PR_RST} $vcs_info_msg_0_$(virtualenv_info)%{$orange%}$pr_24h_clock
+%{$purple%}%n${PR_RST}@%{$orange%}%m${PR_RST} %{$limegreen%}%~${PR_RST} $vcs_info_msg_0_$(virtualenv_info)%{$orange%}$pr_24h_clock${PR_RST}
 $ '
