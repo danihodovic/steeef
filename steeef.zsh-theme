@@ -1,6 +1,7 @@
 # Zsh steeef theme as a standalone repository. The purpose behind this repo is avoid having a
 # dependency on oh-my-zsh when using the steeef theme. Zsh plugin managers such as Antibody can use
 # the theme without having to integrate oh-my-zsh. Credits to the original theme authors.
+# For more info on prompt expansion see http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
 
 # prompt style and colors based on Steve Losh's Prose theme:
 # http://github.com/sjl/oh-my-zsh/blob/master/themes/prose.zsh-theme
@@ -16,7 +17,6 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 function virtualenv_info {
     [ $VIRTUAL_ENV ] && echo '('%F{blue}`basename $VIRTUAL_ENV`%f') '
 }
-PR_GIT_UPDATE=1
 
 setopt prompt_subst
 
@@ -78,6 +78,8 @@ function steeef_precmd {
 }
 add-zsh-hook precmd steeef_precmd
 
+pr_24h_clock='%*'
+
 PROMPT=$'
-%{$purple%}%n${PR_RST}@%{$orange%}%m${PR_RST}» %{$limegreen%}%~${PR_RST} $vcs_info_msg_0_$(virtualenv_info)
+%{$purple%}%n${PR_RST}@%{$orange%}%m${PR_RST} %{$limegreen%}%~${PR_RST} $vcs_info_msg_0_$(virtualenv_info)%{$orange%}$pr_24h_clock
 $ '
