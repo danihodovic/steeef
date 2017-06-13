@@ -12,10 +12,11 @@
 # git untracked files modification from Brian Carper:
 # http://briancarper.net/blog/570/git-info-in-your-zsh-prompt
 
-export VIRTUAL_ENV_DISABLE_PROMPT=1
-
-function virtualenv_info {
-    [ $VIRTUAL_ENV ] && echo '('%F{blue}`basename $VIRTUAL_ENV`%f') '
+function k8s_info {
+  k8s_context=$(cat ~/.kube/config | grep "current-context:" | sed "s/current-context: //")
+  if [ -n $k8s_context ]; then
+    echo "%F{135}(k8s: $k8s_context)"
+  fi
 }
 
 setopt prompt_subst
@@ -81,5 +82,5 @@ add-zsh-hook precmd steeef_precmd
 pr_24h_clock='%*'
 
 PROMPT=$'
-%{$purple%}%n${PR_RST}@%{$orange%}%m${PR_RST} %{$limegreen%}%~${PR_RST} $vcs_info_msg_0_$(virtualenv_info)%{$orange%}$pr_24h_clock${PR_RST}
+%{$purple%}%n${PR_RST}@%{$orange%}%m${PR_RST} %{$limegreen%}%~${PR_RST} $vcs_info_msg_0_$(k8s_info) %{$orange%}$pr_24h_clock${PR_RST}
 $ '
