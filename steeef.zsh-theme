@@ -21,7 +21,7 @@ function k8s_info {
 
 function aws_info {
   if [ ! -z $AWS_PROFILE ]; then
-    echo " %F{177}(aws: $AWS_PROFILE)"
+    echo " %F{111}(aws: $AWS_PROFILE)"
   fi
 }
 
