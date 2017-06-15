@@ -14,8 +14,14 @@
 
 function k8s_info {
   k8s_context=$(cat ~/.kube/config | grep "current-context:" | sed "s/current-context: //")
-  if [ -n $k8s_context ]; then
+  if [ ! -z $k8s_context ]; then
     echo "%F{135}(k8s: $k8s_context)"
+  fi
+}
+
+function aws_info {
+  if [ ! -z $AWS_PROFILE ]; then
+    echo "%F{177}(aws: $AWS_PROFILE)"
   fi
 }
 
@@ -82,5 +88,5 @@ add-zsh-hook precmd steeef_precmd
 pr_24h_clock='%*'
 
 PROMPT=$'
-%{$purple%}%n${PR_RST}@%{$orange%}%m${PR_RST} %{$limegreen%}%~${PR_RST} $vcs_info_msg_0_$(k8s_info) %{$orange%}$pr_24h_clock${PR_RST}
+%{$purple%}%n${PR_RST}@%{$orange%}%m${PR_RST} %{$limegreen%}%~${PR_RST} $vcs_info_msg_0_ $(k8s_info) $(aws_info) %{$orange%}$pr_24h_clock${PR_RST}
 $ '
