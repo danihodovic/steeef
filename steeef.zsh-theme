@@ -15,13 +15,13 @@
 function k8s_info {
   k8s_context=$(cat ~/.kube/config | grep "current-context:" | sed "s/current-context: //")
   if [ ! -z $k8s_context ]; then
-    echo " %F{135}(k8s: $k8s_context)"
+    echo "%F{135}k8s ★ $k8s_context"
   fi
 }
 
 function aws_info {
   if [ ! -z $AWS_PROFILE ]; then
-    echo " %F{111}(aws: $AWS_PROFILE)"
+    echo "%F{111}aws ☢ $AWS_PROFILE"
   fi
 }
 
@@ -74,10 +74,9 @@ zstyle ':vcs_info:*:prompt:*' nvcsformats   ""
 function steeef_precmd {
     # check for untracked files or updated submodules, since vcs_info doesn't
     if git ls-files --other --exclude-standard 2> /dev/null | grep -q "."; then
-        PR_GIT_UPDATE=1
-        FMT_BRANCH="(%{$turquoise%}%b%u%c%{$hotpink%}●${PR_RST})"
+        FMT_BRANCH="%{$turquoise%}git: %b%u%c%{$hotpink%}●%${turquoise%}${PR_RST}"
     else
-        FMT_BRANCH="(%{$turquoise%}%b%u%c${PR_RST})"
+        FMT_BRANCH="%{$turquoise%}git: %b%u%c${PR_RST}"
     fi
     zstyle ':vcs_info:*:prompt:*' formats " ${FMT_BRANCH}"
 
@@ -85,8 +84,8 @@ function steeef_precmd {
 }
 add-zsh-hook precmd steeef_precmd
 
-pr_24h_clock=' %*'
+pr_24h_clock='%*'
 
 PROMPT=$'
-%{$purple%}%n${PR_RST}@%{$orange%}%m${PR_RST} %{$limegreen%}%~${PR_RST}$vcs_info_msg_0_$(k8s_info)$(aws_info)%{$orange%}$pr_24h_clock${PR_RST}
-$ '
+${pr_24h_clock}${PR_RST} %{$limegreen%}%~${PR_RST}${vcs_info_msg_0_} | $(k8s_info) | $(aws_info)%{$orange%}
+${PR_RST}$ '
