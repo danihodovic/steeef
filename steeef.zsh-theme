@@ -13,9 +13,11 @@
 # http://briancarper.net/blog/570/git-info-in-your-zsh-prompt
 
 function k8s_info {
-  k8s_context=$(cat ~/.kube/config | grep "current-context:" | sed "s/current-context: //")
-  if [ ! -z $k8s_context ]; then
-    echo " %F{135}(k8s: $k8s_context)"
+  if [ -f ~/.kube/config ]; then
+    k8s_context=$(cat ~/.kube/config | grep "current-context:" | sed "s/current-context: //")
+    if [ ! -z $k8s_context ]; then
+      echo " %F{135}(k8s: $k8s_context)"
+    fi
   fi
 }
 
